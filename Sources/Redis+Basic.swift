@@ -449,6 +449,13 @@ extension Redis {
         }
     }
 
+    public func pub(_ channel: String, value: String, callback: (Int?, NSError?) -> Void) {
+        var command = ["PUBLISH", channel, value]
+        issueCommandInArray(command) {(response: RedisResponse) in
+            self.redisIntegerResponseHandler(response, callback: callback)
+        }
+    }
+
     /// Renames a key. It returns an error if the original and new names are the same,
     /// or when the original key does not exist.
     ///
